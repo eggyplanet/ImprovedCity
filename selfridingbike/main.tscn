@@ -1,3 +1,54 @@
-[gd_scene format=3 uid="uid://csf0v3dnx7nsg"]
+[gd_scene load_steps=7 format=3 uid="uid://csf0v3dnx7nsg"]
+
+[ext_resource type="PackedScene" uid="uid://ncbljl6mjs0t" path="res://world.tscn" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://bm6n5osf0g53g" path="res://frame.tscn" id="3_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://4f2quptdd7av" path="res://wheel.tscn" id="3_h2yge"]
+[ext_resource type="PackedScene" uid="uid://dt2l52be77jk5" path="res://front.tscn" id="4_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://b5t0deoxmdtbc" path="res://wheel_.tscn" id="5_lquwl"]
+
+[sub_resource type="Environment" id="Environment_0xm2m"]
 
 [node name="Main" type="Node3D"]
+
+[node name="World" parent="." instance=ExtResource("1_0xm2m")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0xm2m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.420878, -0.649704, 0.633046, -3.2347e-11, 0.697865, 0.716229, -0.907117, -0.301445, 0.293716, 11.9257, 19.077, 14.1404)
+shadow_enabled = true
+
+[node name="Frame" parent="." instance=ExtResource("3_1bvp3")]
+transform = Transform3D(1, 0, 0, 0, 0.995161, 0.0982603, 0, -0.0982603, 0.995161, 0, 0.678474, -0.000555855)
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="Frame"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.80297, 0, 0)
+node_a = NodePath("..")
+node_b = NodePath("../../Wheel2")
+
+[node name="SteeringJoint" type="HingeJoint3D" parent="Frame"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.840993, 1.23733, 0)
+node_a = NodePath("..")
+node_b = NodePath("../../Front")
+angular_limit/enable = true
+angular_limit/upper = 1.0472
+angular_limit/lower = -1.0472
+angular_limit/softness = 0.01
+
+[node name="Camera3D" type="Camera3D" parent="Frame"]
+transform = Transform3D(-3.85302e-08, 0.472243, -0.881468, 2.06424e-08, 0.881468, 0.472243, 1, 0, -4.37114e-08, -8.47759, 4.49788, 0)
+
+[node name="Wheel2" parent="." instance=ExtResource("3_h2yge")]
+transform = Transform3D(1, 0, 0, 0, 0.995161, 0.0982603, 0, -0.0982603, 0.995161, -1.803, 0.67897, -0.000604843)
+
+[node name="Front" parent="." instance=ExtResource("4_1bvp3")]
+transform = Transform3D(1, 0, 0, 0, 0.995161, 0.0982603, 0, -0.0982603, 0.995161, 0, 0.594478, 0.00773779)
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="Front"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.57139, 0.146631, 0)
+node_a = NodePath("..")
+node_b = NodePath("../../Wheel_")
+
+[node name="Wheel_" parent="." instance=ExtResource("5_lquwl")]
+transform = Transform3D(1, 0, 0, 0, 0.995161, 0.0982603, 0, -0.0982603, 0.995161, 1.57139, 0.739456, -0.00657709)

@@ -11,5 +11,6 @@ config_version=5
 [application]
 
 config/name="SelfRidingBike"
+run/main_scene="uid://csf0v3dnx7nsg"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
